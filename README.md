@@ -16,3 +16,6 @@ Sovitut työajat alkuun:
 
 ![](./misc/projekti_tyoajat.png)
 
+Tilavaraukset:
+
+![](./misc/tilavaraukset.png)
