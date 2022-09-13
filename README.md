@@ -10,6 +10,8 @@ google trends python package:
 https://lazarinastoy.com/the-ultimate-guide-to-pytrends-google-trends-api-with-python/ (tutorial)  
 & https://pypi.org/project/pytrends/
 
+scrapy https://scrapy.org/ (tai beautiful soup)
+
 nltk luku tekstin luokittelusta: https://www.nltk.org/book/ch06.html
 
 Sovitut työajat alkuun:
