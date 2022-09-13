@@ -6,3 +6,8 @@ API: https://rapidapi.com/apidojo/api/online-movie-database/
 
 movie budgets: https://www.the-numbers.com/movie/budgets/all
 
+
+Sovitut työajat alkuun:
+
+![](./misc/projekti_tyoajat.png)
+
