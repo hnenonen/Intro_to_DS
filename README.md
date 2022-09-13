@@ -6,6 +6,9 @@ API: https://rapidapi.com/apidojo/api/online-movie-database/
 
 movie budgets: https://www.the-numbers.com/movie/budgets/all
 
+google trends python package:  
+https://lazarinastoy.com/the-ultimate-guide-to-pytrends-google-trends-api-with-python/ (tutorial)  
+& https://pypi.org/project/pytrends/
 
 Sovitut työajat alkuun:
 
