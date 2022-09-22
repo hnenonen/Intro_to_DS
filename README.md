@@ -13,7 +13,9 @@ https://lazarinastoy.com/the-ultimate-guide-to-pytrends-google-trends-api-with-p
 ~~scrapy https://scrapy.org/ (tai beautiful soup)~~
 probably not needed after all
 
-nltk luku tekstin luokittelusta: https://www.nltk.org/book/ch06.html
+nltk luku tekstin luokittelusta: https://www.nltk.org/book/ch06.html  
+
+![canvas](https://docs.google.com/document/d/1HfKojNelg8FLHknh_IDe38ExCaPvjSM07MkW1cJag8M/edit#heading=h.w09riado97hl)
 
 Sovitut työajat alkuun:
 
