@@ -1,8 +1,10 @@
+from audioop import minmax
+from itertools import count
 import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import scale
 import math
 import seaborn as sns
@@ -15,11 +17,11 @@ def load_data():
     data.set_index('original_title', inplace=True)
     data['release_date'] = pd.to_datetime(data['release_date'])
 
-    #CHANGE DATE TO DATETIME, SPLIT DATE (for now)
+    #CHANGE DATE TO DATETIME, SPLIT DATE
     data['release_month'] = data['release_date'].dt.month
-    
-    # day/year not needed (for now)
     data['release_year'] = data['release_date'].dt.year
+    
+    # day not needed (for now)
     #data['release_day'] = data['release_date'].dt.day
     
     #Drop date column
@@ -53,46 +55,60 @@ def seaborn_plots(data, split=None):
 
 import datetime
 
-def year_stuff(df):
+def add_freshness(df):
     curr_year = datetime.date.today().year
     max = math.log(curr_year-1980)
 
-    df['release_year_scaled'] = df['release_year'].apply(lambda x: 10*math.log(x-1980)/max if x-1980!=0 else 0)
-    
-    #plt.scatter(df['release_year'], df['release_year_scaled'])
-    #plt.show()
+    df['freshness'] = df['release_year'].apply(lambda x: 10*math.log(x-1980)/max if x-1980!=0 else 0)
 
+
+#probs not needed
 def normal_dist(x , mean , sd):
         prob_density = (np.pi*sd) * np.exp(-0.5*((x-mean)/sd)**2)
         return prob_density
 
-
-from scipy.stats import norm
-def runtime(df):
-    x = scale(df['runtime'])
-    
+def add_runtime_mult(df):
     #Calculate mean and Standard deviation.
     mean = np.mean(df['runtime'])
     sd = np.std(df['runtime'])
+    
     Z = (abs((df['runtime']-mean))/sd)
-    print(max(Z), min(Z))
     df['runtime_multiplier'] = Z.apply(lambda x: 10-x**2)
-    print(df[['runtime','runtime_multiplier']].describe())
+    df['runtime_multiplier'][df['runtime_multiplier']<0].apply(lambda x: 0)
+
+def add_vote_x_avg(df):
+    count_x_avg = df['vote_count']*df['vote_average']    
+    min_val, max_val = min(count_x_avg), max(count_x_avg)
+
+    count_x_avg = count_x_avg.apply(lambda x: 10*math.log(x-min_val)/math.log(max_val-min_val) if x-min_val>0 else 0)
+    
+    df['count_x_avg'] = count_x_avg
+    
+    #df.plot(y='count_x_avg')
+    #plt.show()
+    #print(count_x_avg.describe())
+
+def add_gross(df):
+    gross = df['revenue']-df['budget']
+    min_val, max_val = min(gross), max(gross)
+
+    gross = gross.apply(lambda x: 10*math.sqrt(x-min_val)/math.sqrt(max_val-min_val) if x-min_val>0 else 0)
+    
+    df['gross'] = gross
+
+    df.plot(y='gross')
+    plt.show()
+    #print(df[['revenue', 'gross']])
+    #print(df[['revenue', 'budget']][df['gross']<1]) 
 
 
 def main():
 
     data = load_data()
-    #sns.histplot(data['runtime'])
-    #plt.show()
-    runtime(data)
-
-    #year_stuff(data)
-    #print(data['popularity']*10e-2)
-    #print(data['revenue'].apply(lambda x: math.log(x)))
-    #data = add_goodness_factor(data)
-    #print(data['release_year'])
-    #seaborn_plots(data, 'rating>7')
+    #add_gross(data)
+    #add_vote_x_avg(data)
+    #add_freshness(data)
+    #add_runtime_mult(data)
 
 
 if __name__ == "__main__":
