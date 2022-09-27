@@ -1,49 +1,25 @@
-from audioop import minmax
-from itertools import count
 import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import scale
 import math
 import seaborn as sns
 
 def load_data():
-    data = pd.read_csv('Data/data_1980to2000.csv')
+    data = pd.read_csv('Data/data_processed.csv')
     
     #DROP UNNECESSARY COLUMNS    
     data.drop(columns=['id', 'overview', 'Unnamed: 0'], inplace=True)
     data.set_index('original_title', inplace=True)
-    data['release_date'] = pd.to_datetime(data['release_date'])
 
-    #CHANGE DATE TO DATETIME, SPLIT DATE
-    data['release_month'] = data['release_date'].dt.month
-    data['release_year'] = data['release_date'].dt.year
-    
-    # day not needed (for now)
-    #data['release_day'] = data['release_date'].dt.day
-    
     #Drop date column
-    data.drop(columns=['release_date'], inplace=True)
+    data.drop(columns=['release_date', 'Unnamed: 0.1'], inplace=True)
     
     return data    
 
-def add_goodness_factor(data):
-    data['rating>7'] = data['vote_average'].apply(lambda x: 1 if x>7 else 0)
-    vote_multiplier = 1-10/data['vote_count']
-    data['log_revenue'] = data['revenue'].apply(lambda x: math.log(x))
-    data['log_popularity'] = data['popularity'].apply(lambda x: math.log(x))
-
-    data['goodness'] = (data['vote_average']*vote_multiplier + data['log_revenue'])#+data['log_popularity']
-    
-    #??
-    data.drop(columns=['revenue', 'popularity'], inplace=True)
-    
-    reshaped_goodness = data['goodness'].array.reshape(-1, 1)
-    asd = scale(reshaped_goodness)
-    data['goodness'] = asd
-    return data
+def add_goodness_factor(df):
+    goodness_factor = 0.25*df['gross_factor'] + 0.25*df['pop_factor'] + 0.25*df['freshness_factor'] + 0.25*df['runtime_factor']
+    df['goodness_factor'] = goodness_factor
 
 def seaborn_plots(data, split=None):
     #test_batch = data[['vote_count', 'release_month']]
@@ -55,61 +31,88 @@ def seaborn_plots(data, split=None):
 
 import datetime
 
-def add_freshness(df):
+def add_freshness_factor(df):
     curr_year = datetime.date.today().year
     max = math.log(curr_year-1980)
 
-    df['freshness'] = df['release_year'].apply(lambda x: 10*math.log(x-1980)/max if x-1980!=0 else 0)
+    df['freshness_factor'] = df['year'].apply(lambda x: 10*math.log(x-1980)/max if x-1980!=0 else 0)
 
-
-#probs not needed
-def normal_dist(x , mean , sd):
-        prob_density = (np.pi*sd) * np.exp(-0.5*((x-mean)/sd)**2)
-        return prob_density
-
-def add_runtime_mult(df):
+def add_runtime_factor(df):
     #Calculate mean and Standard deviation.
     mean = np.mean(df['runtime'])
     sd = np.std(df['runtime'])
-    
     Z = (abs((df['runtime']-mean))/sd)
-    df['runtime_multiplier'] = Z.apply(lambda x: 10-x**2)
-    df['runtime_multiplier'][df['runtime_multiplier']<0].apply(lambda x: 0)
+    inverse_Z = (mean/sd)/Z
 
-def add_vote_x_avg(df):
+    min_val, max_val = min(inverse_Z), max(inverse_Z)
+    runtime_factor = inverse_Z.apply(lambda x: 10*math.log(x-min_val)/math.log(max_val-min_val) if x-min_val>0 else 0)
+    df['runtime_factor'] = runtime_factor
+    df.loc[df['runtime_factor']<0, 'runtime_factor'] = 0
+
+    #old method without inverse
+    #df['runtime_factor'] = Z.apply(lambda x: 10-x**2)
+    
+def add_pop_factor(df):
     count_x_avg = df['vote_count']*df['vote_average']    
     min_val, max_val = min(count_x_avg), max(count_x_avg)
 
     count_x_avg = count_x_avg.apply(lambda x: 10*math.log(x-min_val)/math.log(max_val-min_val) if x-min_val>0 else 0)
     
-    df['count_x_avg'] = count_x_avg
+    df['pop_factor'] = count_x_avg
     
     #df.plot(y='count_x_avg')
     #plt.show()
     #print(count_x_avg.describe())
 
-def add_gross(df):
-    gross = df['revenue']-df['budget']
+#fixed_budget,fixed_revenue,fixed_gross
+def add_gross_factor(df):
+    gross = df['fixed_gross']
     min_val, max_val = min(gross), max(gross)
 
     gross = gross.apply(lambda x: 10*math.sqrt(x-min_val)/math.sqrt(max_val-min_val) if x-min_val>0 else 0)
     
-    df['gross'] = gross
+    df['gross_factor'] = gross
 
-    df.plot(y='gross')
-    plt.show()
+    #df.plot(y='gross_factor')
+    #plt.show()
     #print(df[['revenue', 'gross']])
     #print(df[['revenue', 'budget']][df['gross']<1]) 
 
+def popularity_vs_goodness(df):
+    # Tried to scale popularity down, bad result:
+    #
+    #min_val, max_val = min(data['popularity']), max(data['popularity'])
+    #data['popularity_scaled'] = data['popularity'].apply(lambda x: 10*(x-min_val)/(max_val-min_val))
+    
+    tmpr_data = df[['goodness_factor', 'popularity']]
+    
+    #Correlation:
+    #print(tmpr_data.corr())
+    
+    tmpr_data.sample(n=15).plot(grid=True)
+    plt.show()
+    print(tmpr_data.sort_values(by='goodness_factor'))
+    print(tmpr_data.sort_values(by='popularity'))
+
+import os
+def save_results(df):
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, '../Data/data_processed_final.csv')
+    df.to_csv(filename, encoding='utf-8')
 
 def main():
 
     data = load_data()
-    #add_gross(data)
-    #add_vote_x_avg(data)
-    #add_freshness(data)
-    #add_runtime_mult(data)
 
+    add_gross_factor(data)
+    add_pop_factor(data)
+    add_freshness_factor(data)
+    add_runtime_factor(data)
+    add_goodness_factor(data)
+    #print(data[['gross_factor', 'pop_factor', 'freshness_factor', 'runtime_factor']])
+    
+    save_results(data)
 
+    
 if __name__ == "__main__":
     main()
