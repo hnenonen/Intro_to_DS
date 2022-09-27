@@ -9,12 +9,9 @@ def load_data():
     data = pd.read_csv('Data/data_processed.csv')
     
     #DROP UNNECESSARY COLUMNS    
-    data.drop(columns=['id', 'overview', 'Unnamed: 0'], inplace=True)
+    data.drop(columns=['id', 'overview', 'release_date', 'Unnamed: 0.1', 'Unnamed: 0'], inplace=True)
     data.set_index('original_title', inplace=True)
 
-    #Drop date column
-    data.drop(columns=['release_date', 'Unnamed: 0.1'], inplace=True)
-    
     return data    
 
 def add_goodness_factor(df):
