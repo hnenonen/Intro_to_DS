@@ -1,3 +1,4 @@
+from cv2 import sqrt
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -38,9 +39,11 @@ def add_runtime_factor(df):
     #Calculate mean and Standard deviation.
     mean = np.mean(df['runtime'])
     sd = np.std(df['runtime'])
-    Z = (abs((df['runtime']-mean))/sd)
-    inverse_Z = (mean/sd)/Z
 
+    Z = (abs((df['runtime']-mean))/sd)
+    inverse_Z = Z.apply(lambda x : (2*mean/(sd))/math.sqrt(x))
+    #print(Z, inverse_Z.describe())
+    
     min_val, max_val = min(inverse_Z), max(inverse_Z)
     runtime_factor = inverse_Z.apply(lambda x: 10*math.log(x-min_val)/math.log(max_val-min_val) if x-min_val>0 else 0)
     df['runtime_factor'] = runtime_factor
@@ -66,30 +69,13 @@ def add_gross_factor(df):
     gross = df['fixed_gross']
     min_val, max_val = min(gross), max(gross)
 
-    gross = gross.apply(lambda x: 10*math.sqrt(x-min_val)/math.sqrt(max_val-min_val) if x-min_val>0 else 0)
-    
+    gross = gross.apply(lambda x: 10*math.log(x-min_val)/math.log(max_val-min_val) if x-min_val>0 else 0)
     df['gross_factor'] = gross
 
     #df.plot(y='gross_factor')
     #plt.show()
     #print(df[['revenue', 'gross']])
     #print(df[['revenue', 'budget']][df['gross']<1]) 
-
-def popularity_vs_goodness(df):
-    # Tried to scale popularity down, bad result:
-    #
-    #min_val, max_val = min(data['popularity']), max(data['popularity'])
-    #data['popularity_scaled'] = data['popularity'].apply(lambda x: 10*(x-min_val)/(max_val-min_val))
-    
-    tmpr_data = df[['goodness_factor', 'popularity']]
-    
-    #Correlation:
-    #print(tmpr_data.corr())
-    
-    tmpr_data.sample(n=15).plot(grid=True)
-    plt.show()
-    print(tmpr_data.sort_values(by='goodness_factor'))
-    print(tmpr_data.sort_values(by='popularity'))
 
 import os
 def save_results(df):
@@ -108,7 +94,7 @@ def main():
     add_goodness_factor(data)
     #print(data[['gross_factor', 'pop_factor', 'freshness_factor', 'runtime_factor']])
     
-    save_results(data)
+    #save_results(data)
 
     
 if __name__ == "__main__":
