@@ -1,0 +1,35 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<title>Worth to watch?</title>
+<div class="container">
+  <nav class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/hnenonen/Intro_to_DS/blob/main/README.md">Report</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="row">
+    <div class="col-8">
+      <h1>Welcome!</h1>
+      <p>
+        Short on time and don't know if the movie is worth watching based on it's overview?
+      <p>
+        No worries! Our AI will determine it for you!
+      <p>
+        Just paste the overview in the textbox below and get the verdict.
+      <form action="/evaluate" method="post">
+        <div class="form-group col-6">
+          <!--<label for="inputOverview">Movie overview</label>-->
+          <textarea class="form-control" name="inputOverview" rows="5" cols="40"></textarea>
+        </div>
+        <div class="form-group col-20">
+          <button type="submit" class="btn btn-primary">Worth to watch?</button>
+        </div>
+        <p>
+      </form>
+    </div>
+  </div>
+</div>

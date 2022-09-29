@@ -1,0 +1,45 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<title>Worth to watch?</title>
+<div class="container">
+  <nav class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/hnenonen/Intro_to_DS/blob/main/README.md">Report</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="row">
+    <div class="col-8">
+      <h1>Welcome!</h1>
+      <p>
+        Your movie with the following overview:
+      <p>
+      <i>{{ text }}</i>
+      <p>
+        is evaluated by our AI as <b>{{worth_watch}}</b>.
+      
+      <p>
+
+
+      </p>
+      <p>
+        How about watching instead: xxxx
+      <p>
+        Similar movies have on average following statistics:
+        <li>Estimated gross: {{estimated_gross}}
+        <li>Estimated runtime: {{estimated_runtime}}
+        <li>Estimated voteaverage on TMBD: {{estimated_voteaverage}}
+      </p>
+      <form action="/" method="get">
+          <button type="submit" class="btn btn-primary">Try again?</button>
+        </div>
+        <p>
+      </form>
+    </div>
+  </div>
+</div>
+
+
