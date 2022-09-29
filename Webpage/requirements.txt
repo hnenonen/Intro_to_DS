@@ -1,1 +1,2 @@
 chess==1.9.3
+gunicorn==20.1.0
