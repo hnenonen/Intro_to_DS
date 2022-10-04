@@ -10,7 +10,7 @@ def load_data():
     data = pd.read_csv('Data/data_processed.csv')
     
     #DROP UNNECESSARY COLUMNS    
-    data.drop(columns=['id', 'overview', 'release_date', 'Unnamed: 0.1', 'Unnamed: 0'], inplace=True)
+    data.drop(columns=['overview', 'release_date', 'Unnamed: 0.1', 'Unnamed: 0'], inplace=True)
     data.set_index('original_title', inplace=True)
 
     return data    
@@ -94,7 +94,7 @@ def main():
     add_goodness_factor(data)
     #print(data[['gross_factor', 'pop_factor', 'freshness_factor', 'runtime_factor']])
     
-    #save_results(data)
+    save_results(data)
 
     
 if __name__ == "__main__":
