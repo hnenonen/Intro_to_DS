@@ -14,16 +14,21 @@
       <p>
         Your movie with the following overview:
       <p>
+      <hr>
       <i>{{ text }}</i>
+      <hr>
       <p>
         is evaluated by our AI as <b>{{worth_watch}}</b>.
-      
-      <p>
-
-
-      </p>
-      <p>
-        How about watching instead: xxxx
+            </p>
+      <br>
+      <br>
+      Here is some recommendations of movies worth to watch:
+      <hr>
+      {% for recommendation in recommendation_list %}
+      <a href="https://www.themoviedb.org/movie/{{ recommendation[0] }}">{{ recommendation[1] }}</a>          {{ recommendation[2] }}/10
+      <hr>
+      {% endfor %}
+      <br>
       <p>
         Similar movies have on average following statistics:
         <li>Estimated gross: {{estimated_gross}}
