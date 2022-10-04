@@ -68,14 +68,8 @@ def add_pop_factor(df):
 def add_gross_factor(df):
     gross = df['fixed_gross']
     min_val, max_val = min(gross), max(gross)
-
     gross = gross.apply(lambda x: 10*math.log(x-min_val)/math.log(max_val-min_val) if x-min_val>0 else 0)
     df['gross_factor'] = gross
-
-    #df.plot(y='gross_factor')
-    #plt.show()
-    #print(df[['revenue', 'gross']])
-    #print(df[['revenue', 'budget']][df['gross']<1]) 
 
 import os
 def save_results(df):
@@ -92,9 +86,9 @@ def main():
     add_freshness_factor(data)
     add_runtime_factor(data)
     add_goodness_factor(data)
-    #print(data[['gross_factor', 'pop_factor', 'freshness_factor', 'runtime_factor']])
+    print(data[['gross_factor', 'pop_factor', 'freshness_factor', 'runtime_factor']].describe())
     
-    save_results(data)
+    #save_results(data)
 
     
 if __name__ == "__main__":
