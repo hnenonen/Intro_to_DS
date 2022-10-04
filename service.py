@@ -1,3 +1,5 @@
+import pandas as pd
+
 def evaluate(text):
     worth_watch = "BAD"
     estimated_runtime = 180 
@@ -12,3 +14,17 @@ def evaluate(text):
         estimated_voteaverage = 9.0
 
     return(worth_watch, estimated_runtime, estimated_gross, estimated_voteaverage)
+
+def recommendation():
+    df = pd.read_csv('Data/data_processed_final.csv')
+    recommendations = (df[ df["goodness_factor"] > 7.48].sample(3))
+    list = []
+    for index, recommendation in recommendations.iterrows():
+        id = recommendation["id"] 
+        title = recommendation["original_title"] 
+        goodness = round(recommendation["goodness_factor"], 2)
+        movie = [id, title, goodness]
+        list.append(movie)
+    return(list)
+
+print(recommendation())

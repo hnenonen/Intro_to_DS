@@ -13,4 +13,5 @@ def evaluate():
         return render_template("error.html", message="Overview too short or too long")
     else:
         worth_watch, estimated_runtime, estimated_gross, estimated_voteaverage = service.evaluate(text)
-        return render_template("evaluate.html", text=text, worth_watch = worth_watch, estimated_runtime=estimated_runtime, estimated_gross=estimated_gross, estimated_voteaverage=estimated_voteaverage)
+        recommendation_list = service.recommendation()
+        return render_template("evaluate.html", text=text, worth_watch = worth_watch, recommendation_list = recommendation_list, estimated_runtime=estimated_runtime, estimated_gross=estimated_gross, estimated_voteaverage=estimated_voteaverage)
