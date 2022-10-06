@@ -16,7 +16,7 @@ def evaluate():
         estimated_runtime = 180 
         estimated_gross = 9999
         estimated_voteaverage = 5.0
-        recommendation_list = [84773, "The Lord of the Rings: The Rings of Power", 7]
+        #recommendation_list = [84773, "The Lord of the Rings: The Rings of Power", 7]
         #worth_watch, estimated_runtime, estimated_gross, estimated_voteaverage = service.evaluate(text)
-        #recommendation_list = service.recommendation()
+        recommendation_list = service.recommendation()
         return render_template("evaluate.html", text=text, worth_watch = worth_watch, recommendation_list = recommendation_list, estimated_runtime=estimated_runtime, estimated_gross=estimated_gross, estimated_voteaverage=estimated_voteaverage)
