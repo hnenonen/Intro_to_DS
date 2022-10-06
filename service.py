@@ -80,7 +80,7 @@ def evaluate(text):
     
     # calculate goodness score, determine if movie is worth watching
     
-    goodness_threshold = 7.4795 
+    goodness_threshold = 7.1#7.4795 
 
     goodness_weights = [-7.71407791e-04,  1.03398645e-02,  7.71486628e-01, -4.29889367e-01, -6.32915313e-02, -4.12801859e-02, -3.78410081e-02]
     goodness_intercept = 6.958988761645412
@@ -119,7 +119,9 @@ def evaluate(text):
 
     estimated_runtime = round((sum([i*j for (i, j) in zip(features, runtime_weights)])) + runtime_intercept)
 
-    return(worth_watch, estimated_runtime, estimated_gross, estimated_voteaverage)
+    goodness_prediction = round(goodness_prediction, 2)
+
+    return(worth_watch, estimated_runtime, estimated_gross, estimated_voteaverage, goodness_prediction)
 
 def recommendation():
     df = pd.read_csv('Data/data_processed_final.csv')

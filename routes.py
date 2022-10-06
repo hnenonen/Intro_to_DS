@@ -17,6 +17,6 @@ def evaluate():
         #estimated_gross = 9999
         #estimated_voteaverage = 5.0
         
-        worth_watch, estimated_runtime, estimated_gross, estimated_voteaverage = service.evaluate(text)
+        worth_watch, estimated_runtime, estimated_gross, estimated_voteaverage, goodness_prediction = service.evaluate(text)
         recommendation_list = service.recommendation()
-        return render_template("evaluate.html", text=text, worth_watch = worth_watch, recommendation_list = recommendation_list, estimated_runtime=estimated_runtime, estimated_gross=estimated_gross, estimated_voteaverage=estimated_voteaverage)
+        return render_template("evaluate.html", text=text, worth_watch = worth_watch, recommendation_list = recommendation_list, estimated_runtime=estimated_runtime, estimated_gross=estimated_gross, estimated_voteaverage=estimated_voteaverage, goodness_prediction = goodness_prediction)

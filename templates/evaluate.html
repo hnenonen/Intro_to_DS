@@ -19,6 +19,8 @@
       <hr>
       <p>
         is evaluated by our AI as <b>{{worth_watch}}</b>.
+      <p> 
+        Evaluted score: {{ goodness_prediction }}/10
             </p>
       <br>
       <br>
@@ -31,9 +33,9 @@
       <br>
       <p>
         Similar movies have on average following statistics:
-        <li>Estimated gross: {{estimated_gross}}
-        <li>Estimated runtime: {{estimated_runtime}}
-        <li>Estimated voteaverage on TMBD: {{estimated_voteaverage}}
+        <li>Estimated gross: {{estimated_gross}} USD
+        <li>Estimated runtime: {{estimated_runtime}} minutes
+        <li>Estimated voteaverage on TMBD: {{estimated_voteaverage}}/10
       </p>
       <form action="/" method="get">
           <button type="submit" class="btn btn-primary">Try again?</button>
