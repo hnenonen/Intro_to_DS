@@ -8,14 +8,14 @@ def evaluate(text):
 
     # text for analysis 
     
-    # import nltk
-    # import re
-    # import statistics
+    import nltk
+    import re
+    import statistics
 
-    # from nltk import word_tokenize
-    # nltk.download('punkt')
-    # nltk.download('stopwords')
-    # nltk.download('averaged_perceptron_tagger')
+    from nltk import word_tokenize
+    nltk.download('punkt')
+    nltk.download('stopwords')
+    nltk.download('averaged_perceptron_tagger')
 
     # processing the text into various formats
 
@@ -133,4 +133,3 @@ def recommendation():
         list.append(movie)
     return(list)
 
-print(recommendation())
