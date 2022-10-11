@@ -1,6 +1,6 @@
 We are Milja Ketoja, Arttu Koskinen and Heikki Nenonen and our app is Worth2Watch.    [Milja]
 
-Every evening we all have the same problem, what to watch. We try to rely on Netflix recommendations or find top rated movies on imbd.
+Every evening we all have the same problem, what to watch. We try to rely on Netflix recommendations or find top rated movies on imbd. [Milja]
 
 Only to be disappointed again!
 
