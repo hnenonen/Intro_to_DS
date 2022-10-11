@@ -2,10 +2,10 @@
 
 [2] Every evening we all have the same problem, what to watch. We try to rely on Netflix recommendations or find top rated movies on imbd. [Milja]
 
-[3] Only to be disappointed again!
+[3] Only to be disappointed again! [Arttu]
 
 [3] Well fear no more, we have a solution!
-[3] -> [4] Never spend another hour watching a bad film. I present Worth2Watch. Our leading edge AI will determine for you if the movie is good or bad.
+[3] -> [4] Never spend another hour watching a bad film. We present Worth2Watch. Our leading edge AI will determine for you if the movie is good or bad. [Arttu]
 
 4] -> [5] Just insert the movie overview and discover the verdict, good or bad? In addition you are given recommendations of something that is certainly worth a watch!
 
