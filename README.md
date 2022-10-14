@@ -2,7 +2,7 @@
 
 This project contains the documentation for our Introduction to Data Science project 'Worth2Watch', which uses movie overviews to determine if they are worth watching or not. 
 
-The movie data was gathered from TMDB, preprocessed with pandas and model made using NLTK.
+The movie data was gathered from [TMDB](https://www.themoviedb.org/), preprocessed with pandas and model made using NLTK.
 
 A live version of the project can be viewed at http://worth2watch.herokuapp.com  
 
